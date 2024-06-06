@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/social_api
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - /path/to/staticfiles:/path/to/staticfiles
+      - /path/to/mediafiles:/path/to/mediafiles
